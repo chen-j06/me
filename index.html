@@ -5,80 +5,277 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chen Ju - Personal Introduction</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
-            min-height: 100vh; display: flex; justify-content: center; align-items: center;
-            margin: 0; padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
         }
+
         .chat-container {
-            width: 100%; max-width: 800px; background: rgba(255,255,255,.95); backdrop-filter: blur(10px);
-            border: 1px solid rgba(226,232,240,.8); border-radius: 8px; overflow: hidden;
-            height: calc(100vh - 40px); display: flex; flex-direction: column; box-shadow: 0 4px 24px rgba(0,0,0,.06);
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            min-height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
         }
-        .chat-messages { flex: 1; padding: 40px 20px; overflow-y: auto; height: 100%; }
-        .initial-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; padding: 0 20px; }
-        .initial-title { font-size: 32px; font-weight: 600; color: #343a40; margin-bottom: 30px; }
-        .input-container { position: relative; width: 100%; max-width: 600px; }
+
+        .chat-messages {
+            flex: 1;
+            padding: 40px 20px;
+            overflow-y: visible;
+            min-height: calc(100vh - 80px);
+        }
+
+        .initial-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .initial-title {
+            font-size: 32px;
+            font-weight: 400;
+            color: #374151;
+            margin-bottom: 40px;
+            position: fixed;
+            top: calc(50vh - 100px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .input-container {
+            position: fixed;
+            top: 50vh;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% - 40px);
+            max-width: 600px;
+            z-index: 10;
+        }
+
         .chat-input {
-            width: 100%; padding: 16px 60px 16px 50px; border: 2px solid #e9ecef; border-radius: 25px;
-            font-size: 18px; outline: none; transition: all .3s ease;
+            width: 100%;
+            padding: 16px 60px 16px 50px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 18px;
+            outline: none;
+            transition: all 0.3s ease;
         }
-        .chat-input:focus { border-color: #d1d5db; box-shadow: 0 0 0 3px rgba(107,114,128,.1); }
+
+        .chat-input:focus {
+            border-color: #d1d5db;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+        }
+
         .plus-icon, .send-icon {
-            position: absolute; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; cursor: pointer; color: #6c757d; transition: color .3s ease;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            color: #6c757d;
+            transition: color 0.3s ease;
         }
-        .plus-icon { left: 16px; }
+
+        .plus-icon {
+            left: 16px;
+        }
+
         .send-icon {
-            right: 16px; background: #343a40; color: #fff; border-radius: 50%; padding: 6px; opacity: 0; transition: all .3s ease;
+            right: 16px;
+            background: #343a40;
+            color: white;
+            border-radius: 50%;
+            padding: 6px;
+            opacity: 0;
+            transition: all 0.3s ease;
         }
-        .send-icon.active { opacity: 1; background: #374151; }
-        .message { margin: 20px 0; animation: fadeIn .5s ease-in; }
-        .user-message { text-align: right; }
+
+        .send-icon.active {
+            opacity: 1;
+            background: #374151;
+        }
+
+        .message {
+            margin: 20px 0;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .user-message {
+            text-align: right;
+        }
+
         .user-message .message-content {
-            display: inline-block; background: #f3f4f6; color: #374151; padding: 12px 18px; border-radius: 18px 18px 4px 18px; max-width: 80%;
+            display: inline-block;
+            background: #f3f4f6;
+            color: #374151;
+            padding: 12px 18px;
+            border-radius: 18px 18px 4px 18px;
+            max-width: 80%;
         }
-        .assistant-message { text-align: left; }
+
+        .assistant-message {
+            text-align: left;
+        }
+
         .assistant-message .message-content {
-            display: inline-block; background: #f8f9fa; color: #343a40; padding: 20px; border-radius: 18px 18px 18px 4px; max-width: 90%; line-height: 1.6;
+            display: inline-block;
+            background: #f8f9fa;
+            color: #343a40;
+            padding: 20px;
+            border-radius: 18px 18px 18px 4px;
+            max-width: 95%;
+            line-height: 1.6;
         }
-        .typing-indicator { display: none; margin: 20px 0; text-align: left; }
-        .typing-dots { display: inline-block; background: #f8f9fa; padding: 20px; border-radius: 18px 18px 18px 4px; position: relative; }
-        .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #6c757d; margin: 0 2px; animation: typing 1.4s infinite ease-in-out; }
-        .dot:nth-child(1){ animation-delay: -0.32s } .dot:nth-child(2){ animation-delay: -0.16s }
-        @keyframes typing{ 0%,80%,100%{ transform: scale(.8); opacity:.5 } 40%{ transform: scale(1); opacity:1 } }
-        @keyframes fadeIn{ from{ opacity:0; transform: translateY(10px) } to{ opacity:1; transform:none } }
-        .typewriter{ overflow:hidden; border-right:2px solid #6b7280; white-space:nowrap; animation: blink-caret 1s infinite; }
-        @keyframes blink-caret{ from,to{ border-color:transparent } 50%{ border-color:#6b7280 } }
-        .section-title{ font-weight:600; color:#343a40; margin:20px 0 10px 0; }
-        .highlight{ background:#f3f4f6; padding:2px 6px; border-radius:4px; font-weight:500; }
-        ul{ margin:15px 0; padding-left:20px } li{ margin:8px 0; line-height:1.5 }
-        .footer-question{ margin-top:25px; padding-top:20px; border-top:1px solid #e9ecef; font-style:italic; color:#6c757d }
-        .hidden{ display:none }
+
+        .typing-indicator {
+            display: none;
+            margin: 20px 0;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .typing-dots {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 18px 18px 18px 4px;
+            position: relative;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #6c757d;
+            margin: 0 2px;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid #6b7280;
+            white-space: nowrap;
+            animation: blink-caret 1s infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #6b7280; }
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #343a40;
+            margin: 30px 0 15px 0;
+            font-size: 20px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 8px;
+        }
+
+        .sub-title {
+            font-weight: 600;
+            color: #495057;
+            margin: 20px 0 10px 0;
+            font-size: 16px;
+        }
+
+        .highlight {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .footer-question {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            font-style: italic;
+            color: #6c757d;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-messages">
             <div id="initial-screen" class="initial-screen">
-                <h2 class="initial-title">What's on your mind today?</h2>
+                <h2 class="initial-title">Hi, how can I help you?</h2>
                 <div class="input-container">
                     <svg class="plus-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    <input type="text" id="chat-input" class="chat-input" placeholder="Hi, please tell me about Chen Ju." value="Hi, please tell me about Chen Ju.">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Please tell me about Chen Ju." value="Please tell me about Chen Ju.">
                     <svg id="send-btn" class="send-icon active" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                     </svg>
                 </div>
             </div>
 
-            <div id="chat-conversation" class="hidden"><!-- Messages will be added here --></div>
-        </div>
+            <div id="chat-conversation" class="hidden">
+                <!-- Messages will be added here -->
+            </div>
 
-        <div class="typing-indicator" id="typing-indicator">
-            <div class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="typing-indicator" id="typing-indicator">
+                <div class="typing-dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -89,97 +286,159 @@
         const chatConversation = document.getElementById('chat-conversation');
         const typingIndicator = document.getElementById('typing-indicator');
 
-        // ==== REPLACED CONTENT (styles unchanged) ====
-        const responseContent = `
-<div class="section-title">Education & Academic Background</div>
-<p><strong>National University of Singapore (2023–2025)</strong> – Master of Science in Digital Financial Technology, School of Computing. Twice recognized on the <strong>Dean’s List (top 5%)</strong> in 2024 and 2025.</p>
-<p><strong>Tsinghua University, Beijing</strong> –</p>
+        const responseContent = `Got it — here's a detailed professional profile of <span class="highlight">Chen Ju</span>:
+
+<div class="section-title">Education</div>
 <ul>
-  <li><strong>Master of Engineering, Department of Automation (2012–2016)</strong>, specializing in trusted identity management for the Internet of Things.</li>
-  <li><strong>Bachelor of Engineering, Department of Automation (2006–2012)</strong>, with a strong foundation in C/C++, data structures, computer networks, control theory, and operations research.</li>
+<li><strong>National University of Singapore (2023–2025)</strong><br>
+Master of Science in Digital Financial Technology, School of Computing<br>
+- Dean's List (Top 5%) in 2024 and 2025</li>
+<li><strong>Tsinghua University, Beijing</strong><br>
+- Master of Engineering, Department of Automation (2012–2016)<br>
+<em>Specialisation: Trusted identity management for the Internet of Things</em><br>
+- Bachelor of Engineering, Department of Automation (2006–2012)<br>
+<em>Strong foundation in C/C++, Data Structures, Computer Networks, Control Theory, etc.</em></li>
 </ul>
 
 <div class="section-title">Professional Experience</div>
-<p><strong>ByteDance (2017–2023)</strong> – Multiple senior leadership and strategic roles:</p>
+
+<div class="sub-title">ByteDance (2017–2023)</div>
+
+<strong>Senior Project Manager – HR Management Office (2021–2023)</strong>
 <ul>
-  <li><strong>Senior Project Manager (HR Management Office):</strong> Led cross-functional initiatives in HR data compliance, return-to-office strategy, and corporate governance optimization. Provided data-driven decision support to management.</li>
-  <li><strong>Post-Investment Management (Strategy &amp; Investment Dept.):</strong> Automated portfolio financial analysis with Python and launched a post-investment empowerment program, fostering collaborations between ByteDance and portfolio companies.</li>
-  <li><strong>Head of Business Operations (SaaS Enterprise Products):</strong> Built the business ops team for Lark (ByteDance’s enterprise collaboration platform). Secured its first 100 clients (e.g., MissFresh, Amino) and developed a partner ecosystem with over 100 resellers and solution partners, including Deloitte China and Logitech.</li>
+<li>Coordinated multiple cross-functional initiatives in HR data compliance, return-to-office strategy, and corporate governance optimization.</li>
+<li>Supported management decision-making with data-driven analysis.</li>
 </ul>
-<p><strong>Zhaoxi (2013–2017, acquired by ByteDance)</strong> – Co-founder &amp; COO of Zhaoxi Calendar (朝夕日历), an AI-powered smart assistant and social calendar app.</p>
+
+<strong>Post-Investment Management – Strategy & Investment Department (2020–2021)</strong>
 <ul>
-  <li>As an early full-stack developer, contributed to multi-platform product development (Java, PHP, JavaScript, etc.).</li>
-  <li>As COO, drove user growth and commercialization, acquiring 5M+ users with lean marketing. Raised 10M+ RMB venture funding before acquisition by ByteDance.</li>
+<li>Automated quarterly portfolio financial analysis using Python, improving accuracy and efficiency.</li>
+<li>Established post-investment empowerment program, enabling collaborations between ByteDance and portfolio companies.</li>
+</ul>
+
+<strong>Head of Business Operations – SaaS Enterprise Products (2017–2020)</strong>
+<ul>
+<li>Built the business operations team for <strong>Lark</strong>, ByteDance's enterprise collaboration platform.</li>
+<li>Secured the first 100 clients (e.g., MissFresh, Amino) and built an ecosystem of 100+ partners (e.g., Deloitte China, Logitech).</li>
+</ul>
+
+<div class="sub-title">Zhaoxi (2013–2017, acquired by ByteDance)</div>
+
+<strong>Co-founder & COO</strong>
+<ul>
+<li>Co-founded <strong>Zhaoxi Calendar (朝夕日历)</strong>, an AI-powered smart assistant and social calendar.</li>
+<li>Early stage: contributed as a <strong>full-stack developer</strong> (Java, PHP, JavaScript).</li>
+<li>Later stage: drove user growth and commercialization, acquiring <strong>5M+ users</strong> with lean marketing.</li>
+<li>Raised <strong>10M+ RMB venture funding</strong> before acquisition by ByteDance.</li>
 </ul>
 
 <div class="section-title">Achievements</div>
 <ul>
-  <li>Twice named to the Dean’s List at NUS SoC (2024 &amp; 2025).</li>
-  <li>Two invention patents granted by China’s State Intellectual Property Office (2017).</li>
-  <li>Multiple academic scholarships at Tsinghua, including the Zheng Geru Scholarship (2007, 2011).</li>
-  <li>Third-class Medal awarded during service in the People’s Liberation Army (2010).</li>
+<li>Dean's List (Top 5%) at NUS SoC – 2024 & 2025</li>
+<li>Granted <strong>2 invention patents</strong> by China's State Intellectual Property Office (2017)</li>
+<li>Multiple <strong>Zheng Geru Scholarships</strong> at Tsinghua (2007, 2011)</li>
+<li><strong>Third-class Medal</strong> – People's Liberation Army (2010)</li>
 </ul>
 
-<div class="section-title">Technical Skills</div>
+<div class="section-title">Skills</div>
 <ul>
-  <li><strong>Programming:</strong> C/C++, Java, PHP, HTML, JavaScript, Python, MATLAB.</li>
-  <li><strong>Languages:</strong> IELTS 7.5 (Listening 8.0, Reading 8.5, Speaking 6.5, Writing 6.5).</li>
-  <li><strong>Interests:</strong> Passion for cycling – notably completed a 2,000 km ride across the Tibet Plateau at 4,000m+ altitude.</li>
+<li><strong>Programming:</strong> C/C++, Java, PHP, HTML, JavaScript, Python, MATLAB</li>
+<li><strong>Languages:</strong> IELTS 7.5 (Listening 8.0, Reading 8.5, Speaking 6.5, Writing 6.5)</li>
+<li><strong>Interests:</strong> Cycling enthusiast – rode <strong>2,000+ km across Tibet Plateau</strong> (avg. altitude 4,000m+)</li>
 </ul>
 
 <div class="section-title">Summary</div>
-<p>Chen Ju is a tech-driven leader with deep expertise in AI, fintech, and enterprise operations. With a unique blend of entrepreneurship (Zhaoxi), big tech leadership (ByteDance), and academic excellence (NUS &amp; Tsinghua), he brings both strategic vision and technical execution skills. His background spans building and scaling products, investment strategy, data analytics, and compliance/governance projects, making him well-positioned to drive innovation at the intersection of technology, finance, and global business.</p>
-        `;
+
+Chen Ju is a tech-driven leader with expertise in <strong>AI, fintech, and enterprise operations</strong>, combining entrepreneurial experience (Zhaoxi), big tech leadership (ByteDance), and academic excellence (NUS & Tsinghua). His background spans <strong>building and scaling products, investment strategy, data analytics, and compliance/governance projects</strong>, making him well-positioned to drive innovation at the intersection of <strong>technology, finance, and global business</strong>.`;
 
         function addMessage(content, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : 'assistant-message'}`;
+            
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
-            if (isUser) { contentDiv.textContent = content; } else { contentDiv.innerHTML = content; }
+            
+            if (isUser) {
+                contentDiv.textContent = content;
+            } else {
+                contentDiv.innerHTML = content;
+            }
+            
             messageDiv.appendChild(contentDiv);
             chatConversation.appendChild(messageDiv);
         }
 
         function typeWriter(element, text, speed = 30) {
             return new Promise((resolve) => {
-                let i = 0, currentText = '';
+                let i = 0;
+                let currentText = '';
                 const htmlText = text;
-                (function type(){
+                
+                function type() {
                     if (i < htmlText.length) {
                         currentText += htmlText.charAt(i);
                         element.innerHTML = currentText;
                         i++;
                         setTimeout(type, speed);
-                    } else { resolve(); }
-                })();
+                    } else {
+                        resolve();
+                    }
+                }
+                
+                type();
             });
         }
 
         async function simulateResponse() {
+            // Hide initial screen and show conversation
             initialScreen.classList.add('hidden');
             chatConversation.classList.remove('hidden');
-            addMessage('Hi, please tell me about Chen Ju.', true);
-
+            
+            // Add user message
+            addMessage('Please tell me about Chen Ju.', true);
+            
+            // Show typing indicator
             typingIndicator.style.display = 'block';
-            await new Promise(r => setTimeout(r, 1200));
+            
+            // Wait for typing simulation
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Hide typing indicator
             typingIndicator.style.display = 'none';
-
+            
+            // Add assistant message with typewriter effect
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message assistant-message';
+            
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
+            
             messageDiv.appendChild(contentDiv);
             chatConversation.appendChild(messageDiv);
-
+            
+            // Start typewriter effect
             await typeWriter(contentDiv, responseContent, 8);
         }
 
-        sendBtn.addEventListener('click', simulateResponse);
-        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') simulateResponse(); });
+        // Event listeners
+        sendBtn.addEventListener('click', () => {
+            if (!sendBtn.disabled) {
+                simulateResponse();
+            }
+        });
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !sendBtn.disabled) {
+                simulateResponse();
+            }
+        });
+
+        // Update send button state
         chatInput.addEventListener('input', () => {
-            if (chatInput.value.trim()) sendBtn.classList.add('active');
-            else sendBtn.classList.remove('active');
+            if (chatInput.value.trim()) {
+                sendBtn.classList.add('active');
+            } else {
+                sendBtn.classList.remove('active');
+            }
         });
     </script>
 </body>
