@@ -258,7 +258,7 @@
                     <svg class="plus-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    <input type="text" id="chat-input" class="chat-input" placeholder="Please tell me about Chen Ju." value="Can you tell me a bit about Chen Ju?">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Please tell me about Chen Ju." value="Tell me a bit about Chen Ju.">
                     <svg id="send-btn" class="send-icon active" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                     </svg>
@@ -368,7 +368,7 @@ Chen Ju is a tech-driven leader with expertise in <strong>AI, fintech, and busin
             chatConversation.appendChild(messageDiv);
         }
 
-        function typeWriter(element, text, speed = 30) {
+        function typeWriter(element, text, speed = 40) {
             return new Promise((resolve) => {
                 let i = 0;
                 let currentText = '';
@@ -395,7 +395,7 @@ Chen Ju is a tech-driven leader with expertise in <strong>AI, fintech, and busin
             chatConversation.classList.remove('hidden');
             
             // Add user message
-            addMessage('Can you tell me a bit about Chen Ju?', true);
+            addMessage('Tell me a bit about Chen Ju.', true);
             
             // Show typing indicator
             typingIndicator.style.display = 'block';
@@ -417,7 +417,7 @@ Chen Ju is a tech-driven leader with expertise in <strong>AI, fintech, and busin
             chatConversation.appendChild(messageDiv);
             
             // Start typewriter effect
-            await typeWriter(contentDiv, responseContent, 8);
+            await typeWriter(contentDiv, responseContent, 4);
         }
 
         // Event listeners
