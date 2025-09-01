@@ -297,18 +297,16 @@
         const chatConversation = document.getElementById('chat-conversation');
         const typingIndicator = document.getElementById('typing-indicator');
 
-        const responseContent = `Got it — here's a detailed profile of <span class="highlight">Chen Ju</span>:
+        const responseContent = `Sure — here's a detailed profile of <span class="highlight">Chen Ju</span>:
 
 <div class="section-title">Education</div>
 <ul>
 <li><strong>National University of Singapore </strong><br>
 Master of Science in Digital Financial Technology, School of Computing<br>
 - Dean's List (Top 5%) in 2024 and 2025</li>
-<li><strong>Tsinghua University, Beijing</strong><br>
+<li><strong>Tsinghua University</strong><br>
 - Master of Engineering, Department of Automation <br>
-<em>Specialisation: Trusted identity management for the Internet of Things</em><br>
-- Bachelor of Engineering, Department of Automation <br>
-<em>Strong foundation in C/C++, Data Structures, Computer Networks, Control Theory, etc.</em></li>
+- Bachelor of Engineering, Department of Automation <br></li>
 </ul>
 
 <div class="section-title">Professional Experience</div>
@@ -347,13 +345,13 @@ Master of Science in Digital Financial Technology, School of Computing<br>
 <ul>
 <li>Dean's List (Top 5%) at NUS SoC (2024, 2025)</li>
 <li>Granted <strong>2 invention patents</strong> by China's State Intellectual Property Office (2017)</li>
-<li>Multiple <strong>Zheng Geru Scholarships</strong> at Tsinghua (2007, 2011)</li>
+<li><strong>Zheng Geru Scholarships</strong> at Tsinghua (2007, 2011)</li>
 <li><strong>Third-class Medal</strong> – People's Liberation Army (2010)</li>
 </ul>
 
 <div class="section-title">Skills</div>
 <ul>
-<li><strong>Programming:</strong> C/C++, Java, PHP, HTML, JavaScript, Python, MATLAB</li>
+<li><strong>Programming:</strong> Python, RAG(LLMs), C/C++, Java, PHP, JavaScript, MATLAB</li>
 <li><strong>Languages:</strong> IELTS 7.5 (Listening 8.0, Reading 8.5, Speaking 6.5, Writing 6.5)</li>
 <li><strong>Sports:</strong> Cycling enthusiast – rode <strong>2,000+ km across Tibet Plateau</strong> (avg. altitude 4,000m+)</li>
 </ul>
@@ -361,12 +359,17 @@ Master of Science in Digital Financial Technology, School of Computing<br>
 <div class="section-title">Personal Projects</div>
 <ul>
 <li><strong>LiteTodo:</strong> A WeChat-based AI personal scheduling assistant powered by DeepSeek. </li>
-<li><strong>ReadEase:</strong> A Chrome extension that extracts and summarizes articles using OpenAI API.</li>
+<li><strong>ReadEase:</strong> A Chrome extension that extracts articles from webpages and summarizes content using OpenAI API.</li>
 </ul>
 
 <div class="section-title">Summary</div>
 
-Chen Ju is a tech-driven leader with expertise in <strong>AI, fintech, and business operations</strong>, combining entrepreneurial experience (Zhaoxi), big tech leadership (ByteDance), and academic excellence (NUS & Tsinghua). His background spans <strong>building and scaling products, investment strategy, data analytics, and compliance/governance projects</strong>, making him well-positioned to drive innovation at the intersection of <strong>technology, finance, and global business</strong>.`;
+Chen Ju is a tech-driven leader with expertise in <strong>AI, fintech, and business operations</strong>, combining entrepreneurial experience (Zhaoxi), big tech leadership (ByteDance), and academic excellence (NUS & Tsinghua). His background spans <strong>building and scaling products, investment strategy, data analytics, and compliance/governance projects</strong>, making him well-positioned to drive innovation at the intersection of <strong>technology, finance, and global business</strong>.
+
+<div class="section-title">Contact</div>
+
+Phone: +65 8067 9082<br>
+Email: chenju@u.nus.edu`;
 
         function addMessage(content, isUser = false) {
             const messageDiv = document.createElement('div');
