@@ -58,15 +58,16 @@
             color: #374151;
             margin-bottom: 40px;
             position: fixed;
-            top: calc(50vh - 120px);
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             z-index: 10;
+            margin-top: -120px;
         }
 
         .input-container {
             position: fixed;
-            top: 50vh;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: calc(100% - 40px);
@@ -81,7 +82,8 @@
             border-radius: 25px;
             font-size: 18px;
             outline: none;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform;
         }
 
         .chat-input:focus {
@@ -98,10 +100,12 @@
             cursor: pointer;
             color: #6c757d;
             transition: color 0.3s ease;
+            z-index: 10;
         }
 
         .plus-icon {
             left: 16px;
+            color: #6c757d;
         }
 
         .send-icon {
@@ -258,6 +262,8 @@
                 padding: 10px;
             }
         }
+
+
     </style>
 </head>
 <body>
@@ -269,7 +275,7 @@
                     <svg class="plus-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    <input type="text" id="chat-input" class="chat-input" placeholder="Please tell me a bit about Chen Ju." value="Tell me a bit about Chen Ju.">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Could you tell me a bit about Chen Ju?" value="Could you tell me a bit about Chen Ju?">
                     <svg id="send-btn" class="send-icon active" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                     </svg>
@@ -414,7 +420,7 @@ Email: chenju@u.nus.edu`;
             chatConversation.classList.remove('hidden');
             
             // Add user message
-            addMessage('Tell me a bit about Chen Ju.', true);
+            addMessage(getUserMessage(), true);
             
             // Show typing indicator
             typingIndicator.style.display = 'block';
@@ -438,6 +444,52 @@ Email: chenju@u.nus.edu`;
             // Start typewriter effect
             await typeWriter(contentDiv, responseContent, 5);
         }
+
+
+
+
+
+        // Set placeholder and value based on screen size
+        function setPlaceholder() {
+            if (window.innerWidth <= 768) {
+                // Mobile devices
+                chatInput.placeholder = "Please tell me a bit about Chen Ju.";
+                chatInput.value = "Tell me a bit about Chen Ju.";
+            } else {
+                // PC devices
+                chatInput.placeholder = "Could you tell me a bit about Chen Ju?";
+                chatInput.value = "Could you tell me a bit about Chen Ju?";
+            }
+        }
+
+        // Get user message based on screen size
+        function getUserMessage() {
+            if (window.innerWidth <= 768) {
+                return "Tell me a bit about Chen Ju.";
+            } else {
+                return "Could you tell me a bit about Chen Ju?";
+            }
+        }
+
+        // Set initial placeholder
+        setPlaceholder();
+
+        // Update placeholder on window resize
+        window.addEventListener('resize', setPlaceholder);
+
+        // Ensure plus icon is visible
+        function ensurePlusIconVisible() {
+            const plusIcon = document.querySelector('.plus-icon');
+            if (plusIcon) {
+                plusIcon.style.display = 'block';
+                plusIcon.style.visibility = 'visible';
+                plusIcon.style.color = '#6c757d';
+            }
+        }
+
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', ensurePlusIconVisible);
+        window.addEventListener('load', ensurePlusIconVisible);
 
         // Event listeners
         sendBtn.addEventListener('click', () => {
